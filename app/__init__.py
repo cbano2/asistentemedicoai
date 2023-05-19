@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, jsonify
-from flask_wtf.csrf import CSRFProtect
 from flask_mysqldb import MySQL
 from .models.ModeloDiagnostico import ModeloDiagnostico
 from .models.ModeloUsuario import ModeloUsuario
@@ -9,8 +8,7 @@ from .models.entities.Consulta import Consulta
 from .models.ModeloConsulta import ModeloConsulta
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from .consts import *
-from config import Config
-import openai
+
 from .models.entities.Paciente import Paciente
 
 app = Flask(__name__)

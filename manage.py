@@ -1,4 +1,6 @@
 from flask_script import Manager, Server
+
+
 from app import initialize_app
 from config import config
 
