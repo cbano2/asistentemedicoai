@@ -1,0 +1,45 @@
+{% extends './body.html' %}
+
+{%block title %}Listado de pacientes{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <h1>{{ data.titulo }}</h1>
+    </div>
+</div>
+<hr/>
+
+
+<div class="row">
+{% for l in data.diagnosticos %}
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{l.paciente_id.nombre_completo()}}</h5>
+                <p class="card-text">{{l.paciente_id.cedula}}</p>
+                <hr/>
+                <form  class="form-diagnostico" action="/consultarPaciente" method="POST">
+                <input class="form-control" name= "signos_vitales" type="text" placeholder="Signos vitales">
+                <input class="form-control" name= "sintomas" type="text" placeholder="Sintomas">
+                <input class="form-control" name= "examenes_extra" type="text" placeholder="Exámenes extra">
+                </form>
+                <hr/>
+                <button id="{{ l.isbn }}" title="{{ l.paciente_id.id }}"  class="btn btn-block btn-primary btnConsultar" >Consultar</button>
+            </div>
+
+        </div>
+    </div>
+    {% if loop.index % 2 == 0 %}
+        </div>
+        <div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% block customJS %}
+<script src="{{ url_for('static', filename='lib/sweetalert2-9.10.0/sweetalert2.all.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notificacionSwal.js') }}"></script>
+<script src="{{ url_for('static', filename='js/listado_diagnosticos.js') }}"></script>
+{% endblock %}

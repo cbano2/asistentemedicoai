@@ -1,0 +1,15 @@
+{% extends './body.html' %}
+
+
+{% block title %}Error{% endblock %}
+{% block container %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div style="display: flex; justify-content: center;  height: 100vh; align-items: center; margin-top:-50px; margin-left: 550px">
+            <img class="mb-4" src="{{ url_for('static', filename='img/error.svg') }}" alt="" width="500px" height="500px">
+          </div>  
+    </div>
+
+</div>
+
+{% endblock %}

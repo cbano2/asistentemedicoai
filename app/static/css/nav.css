@@ -1,0 +1,12 @@
+
+  .navbar-brand img {
+    width: 150px; /* Ancho deseado */
+    height: 50px; /* Altura deseada */
+    object-fit: contain; /* Ajustar sin deformar */
+  }
+  .navbar {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  

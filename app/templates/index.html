@@ -1,0 +1,117 @@
+{% extends './body.html' %}
+
+
+{% block title %}Index{% endblock %}
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/index.css') }}">
+{% endblock %}
+{% block container %}
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        {%with messages = get_flashed_messages() %}
+    {% if messages %}
+    <br/>
+    {% for message in messages%}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong style="font-size: 14px;">{{ message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+
+    {% endif %}
+    {% endwith %}
+                
+  
+</div>
+</div>
+
+<hr/>
+<div class="row"></div>
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    {% if data.titulo == 'Diagnósticos realizados' %}
+    
+    {% else %}
+    
+    {% endif %}
+    {% if current_user.tipousuario.id == 1 %}
+    <div style="display: flex; justify-content: center;  height: 100vh; margin-bottom: -450px">
+        <img class="mb-4" src="{{ url_for('static', filename='img/diag2.svg') }}" alt="" width="600px" height="200px">
+      </div>  
+      <hr/>
+        {% if data.diagnosticos_realizados|length > 0 %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Consulta</th>
+                            <th>Paciente</th>
+                            <th>Cedula</th>
+                            <th>Fecha</th>
+                            <th>Consultas realizadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set contador = namespace(total=0) %}
+                        {% for l in data.diagnosticos_realizados %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ l.diagnostico_isbn.isbn }}</td>
+                                <td>{{ l.diagnostico_isbn.paciente_id.nombre_completo() }}</td>
+                                <td>{{ l.diagnostico_isbn.paciente_id.cedula }}</td>
+                                <td>{{ l.fecha }}</td>
+                                <td>{{ l.diagnostico_isbn.consultas_realizadas }}</td>
+                            </tr>
+                            {% set contador.total = contador.total + l.diagnostico_isbn.consultas_realizadas %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="5"></td>
+                            <td>{{ contador.total }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        
+        {% else %}
+            <div style="display: flex; justify-content: center;  height: 100vh; align-items: center; margin-top:-150px">
+                <img class="mb-4" src="{{ url_for('static', filename='img/nodiag2.svg') }}" alt="" width="300px" height="300px">
+              </div>  
+        {% endif %}
+    {% else %}
+        <div style="display: flex; justify-content: center;  height: 100vh; margin-bottom: -450px">
+        <img class="mb-4" src="{{ url_for('static', filename='img/diag.svg') }}" alt="" width="600px" height="200px">
+      </div>
+      <hr/> 
+      {% if data.consultas|length > 0 %}
+      {% for c in data.consultas %}
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                  <h5 class="card-title"># {{ c.diagnostico_isbn.isbn }}</h5>
+                  <p class="card-text">{{ c.diagnostico_isbn.paciente_id.nombre_completo()}}</p>
+                  <p class="card-text">CI: {{ c.diagnostico_isbn.paciente_id.cedula }}</p>
+                  <p class="card-text">Consulta hecha: {{ c.formatted_date() }}</p>
+                  <p class="card-text">Triaige: {{ c.diagnostico_isbn.openai}}</p>
+                  <hr/>        
+              </div>
+  
+          </div>
+      </div>
+    
+          {% endfor %}  
+
+        {% else %}
+            <div style="display: flex; justify-content: center;  height: 100vh; align-items: center; margin-top:-150px">
+                <img class="mb-4" src="{{ url_for('static', filename='img/nodiag2.svg') }}" alt="" width="300px" height="300px">
+              </div>  
+        {% endif %} 
+    {% endif%}
+
+</div>
+{% endblock %}
