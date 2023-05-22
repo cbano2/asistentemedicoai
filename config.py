@@ -9,6 +9,10 @@ class DevelopmentConfig(Config):
     MYSQL_USER = 'sql10619479'
     MYSQL_PASSWORD = 'H2JUTBYIwP'
     MYSQL_DB = 'sql10619479'
+    # MYSQL_HOST = '127.0.0.1'
+    # MYSQL_USER = 'Astrix341'
+    # MYSQL_PASSWORD = 'Nizorra.341'
+    # MYSQL_DB = 'triaige'
 
 
 config = {

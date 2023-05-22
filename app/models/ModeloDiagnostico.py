@@ -32,7 +32,7 @@ class ModeloDiagnostico():
         try:
             cursor = db.connection.cursor()
             sql = """SELECT CON.diagnostico_isbn, DIG.paciente_id, CON.fecha, 
-            PAC.apellidos, PAC.nombres, PAC.fechanacimiento, PAC.genero, PAC.caracteristicas, PAC.cedula,
+            PAC.apellidos, PAC.nombres, PAC.fechanacimiento, PAC.genero, PAC.caracteristicas, PAC.cedula, DIG.openai,
             COUNT(CON.diagnostico_isbn) AS Consultas_Realizadas
             FROM consulta CON JOIN diagnostico DIG ON CON.diagnostico_isbn = DIG.isbn
             JOIN paciente PAC ON DIG.paciente_id = PAC.id
@@ -45,10 +45,10 @@ class ModeloDiagnostico():
                                genero=row[6], caracteristicas=row[7], cedula=row[8], correo=None)
                 diag = Diagnostico(isbn=row[0], signos_vitales=None,
                                    sintomas=None, paciente_id=pac,
-                                   openai=None, examenes_extra=None)
+                                   openai=row[9], examenes_extra=None)
                 con = Consulta(uuid=None,
                                fecha=row[2], diagnostico_isbn=diag, user_id=None)
-                diag.consultas_realizadas = int(row[9])
+                diag.consultas_realizadas = int(row[10])
                 diagnosticos.append(con)
             return diagnosticos
 

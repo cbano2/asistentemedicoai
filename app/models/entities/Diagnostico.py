@@ -4,7 +4,7 @@ import random
 class Diagnostico():
 
     def __init__(self, isbn, paciente_id, openai, signos_vitales, sintomas, examenes_extra):
-        self.isbn = isbn
+        self.isbn = self.isbn_generator() if isbn is None else isbn
         self.paciente_id = paciente_id
         self.openai = openai
         self.signos_vitales = signos_vitales

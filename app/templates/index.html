@@ -88,22 +88,25 @@
         <img class="mb-4" src="{{ url_for('static', filename='img/diag.svg') }}" alt="" width="600px" height="200px">
       </div>
       <hr/> 
+      <div class="row">
       {% if data.consultas|length > 0 %}
       {% for c in data.consultas %}
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <div class="card mb-4 shadow-sm">
-              <div class="card-body">
+      {% if c.diagnostico_isbn.openai|length > 0 %}
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-11" >
+          <div class="card mb-4 shadow-sm" style="overflow-y: scroll;">
+              <div class="card-body" style="justify-content: center">
                   <h5 class="card-title"># {{ c.diagnostico_isbn.isbn }}</h5>
                   <p class="card-text">{{ c.diagnostico_isbn.paciente_id.nombre_completo()}}</p>
                   <p class="card-text">CI: {{ c.diagnostico_isbn.paciente_id.cedula }}</p>
                   <p class="card-text">Consulta hecha: {{ c.formatted_date() }}</p>
-                  <p class="card-text">Triaige: {{ c.diagnostico_isbn.openai}}</p>
+                  <p class="card-text">Triaige: {{ c.diagnostico_isbn.openai }}</p>
                   <hr/>        
               </div>
   
           </div>
       </div>
-    
+    </div>
+    {% endif %} 
           {% endfor %}  
 
         {% else %}
